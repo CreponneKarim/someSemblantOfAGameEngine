@@ -27,8 +27,8 @@
 
 class Model{
 	public:
-		glm::mat4 model;	//	for scaling, rotating and translating
-		//glm::mat4 position;	//	for future shit lol
+		glm::mat4 model=glm::mat4(1.0f);	//	for scaling, rotating and translating
+		//glm::mat4 position;			//	for future shit lol
 
 		Model(std::string path);
 		Model(std::string path,glm::mat4 model);

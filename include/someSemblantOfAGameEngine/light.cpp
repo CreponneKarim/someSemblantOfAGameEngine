@@ -8,7 +8,8 @@ Light::Light(	float kc,
 		float kq,
 		float ambient,
 		float diffuse,
-		glm::vec3 lightColor){
+		glm::vec3 lightColor,
+		Model *model){
 	Light::kc = kc;
 	Light::kq = kq;
 	Light::kl = kl;
@@ -16,6 +17,8 @@ Light::Light(	float kc,
 	Light::ambient	= ambient;
 	Light::diffuse	= diffuse;
 	Light::lightColor = lightColor;
+
+	if(model!=nullptr)	Light::model=model;
 }
 Light::Light(){}
 void Light::setVars(Shader &shader_, int lightIndex){
@@ -33,11 +36,14 @@ void Light::setVars(Shader &shader_, int lightIndex){
 	shader_.setFloat(lightNbr.append("kc").c_str(),Light::kc);lightNbr=save;
 	shader_.setFloat(lightNbr.append("kl").c_str(),Light::kl);lightNbr=save;
 	shader_.setFloat(lightNbr.append("kq").c_str(),Light::kq);lightNbr=save;
+
+	shader_.setFloat(lightNbr.append("lightColor").c_str(),Light::kq);lightNbr=save;
 }
 void Light::draw(Shader &shader, int lightIndex){
 	shader.use();
 	setVars(shader,lightIndex);
-	Light::model->draw(shader);
+	shader.setVec3("lightColor",Light::lightColor);
+	if(Light::model!=nullptr)	Light::model->draw(shader);
 }
 float Light::getKc(){
 	return Light::kc;

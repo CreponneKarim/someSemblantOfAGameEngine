@@ -18,7 +18,8 @@ class Light{
 			float kq,
 			float ambient,
 			float diffuse,
-			glm::vec3 lightColor);
+			glm::vec3 lightColor,
+			Model *model);
 
 		//	create a light with the default values
 		Light();

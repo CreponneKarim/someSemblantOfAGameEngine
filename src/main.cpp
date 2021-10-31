@@ -138,7 +138,14 @@ int main(int argc, char *argv[]){
 	fileDialog.SetTitle("load model");
 	fileDialog.SetTypeFilters({".obj"});
 
-	//Model cubeModel(std::filesystem::path(""));
+	Model cubeModel(std::filesystem::path("/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine/models/cube/w5c7yv4l7sgo.obj"));
+	Light light(	LightVars::kcDefault,
+			LightVars::klDefault,
+			LightVars::kqDefault,
+			LightVars::ambientDefault,
+			LightVars::diffuseDefault,
+			LightVars::lightColorDefault,
+			&cubeModel);
 
 	while(!glfwWindowShouldClose(window1)){
 
@@ -155,6 +162,13 @@ int main(int argc, char *argv[]){
 				
 		glBindVertexArray(VAO);
 		shaderProgram.use();
+
+		//	camera settings
+		lightShaderProgram.use();
+		lightShaderProgram.setMat4("view",camera.getCamera());
+		lightShaderProgram.setMat4("projection",camera.getProjection());
+
+		light.draw(lightShaderProgram,0);
 
 		// //	setting additional params to the lights
 		// for(int i=0;i<nbLights;i++){
@@ -202,23 +216,23 @@ int main(int argc, char *argv[]){
 		shaderProgram.setFloat("material.shininess", 64);
 
 		glBindVertexArray(lightVAO);
-		lightShaderProgram.use();
+		// lightShaderProgram.use();
 
-		lightShaderProgram.setVec3("lightColor",lightColor);
+		// lightShaderProgram.setVec3("lightColor",lightColor);
 
-		//	draw the different lights
-		for(int i=0;i<nbLights;i++){	
+		// //	draw the different lights
+		// for(int i=0;i<nbLights;i++){	
 
-			glm::mat4 model(1.0f);
-			model = glm::translate(model,lightPosition[i]);
-			model = glm::scale(model,glm::vec3(0.2f));
+		// 	glm::mat4 model(1.0f);
+		// 	model = glm::translate(model,lightPosition[i]);
+		// 	model = glm::scale(model,glm::vec3(0.2f));
 
-			shaderProgram.setMat4("model",model);
-			shaderProgram.setMat4("view",camera.getCamera());
-			shaderProgram.setMat4("projection",camera.getProjection());
-			glDrawArrays(GL_TRIANGLES,0,36);
-		}
-
+		// 	shaderProgram.setMat4("model",model);
+		// 	shaderProgram.setMat4("view",camera.getCamera());
+		// 	shaderProgram.setMat4("projection",camera.getProjection());
+		// 	glDrawArrays(GL_TRIANGLES,0,36);
+		// }
+		
 		//	render loaded models
 		for(int i=0; i<loadedModels.size();i++)
 			if(!loadedModels[i].getIsALight())loadedModels[i].draw(shaderProgram);
@@ -233,6 +247,7 @@ int main(int argc, char *argv[]){
 		glBindVertexArray(0);
 
 		glfwPollEvents();
+		
 		//	dearImGui stuff
 		//	create new frame
 		ImGui_ImplGlfw_NewFrame();
@@ -277,8 +292,6 @@ int main(int argc, char *argv[]){
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		
 		glfwSwapBuffers(window1);
-		
-
 	}
 
 	shaderProgram.cleanup();
