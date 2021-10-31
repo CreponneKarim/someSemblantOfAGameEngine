@@ -1,10 +1,8 @@
-#ifndef CAMERA
-#define CAMERA
+#ifndef CAMERA_CPP
+#define CAMERA_CPP
 
-#include <libs/stb_image.h>
-
-#include <src/main.hpp>
 #include <include/someSemblantOfAGameEngine/camera.hpp>
+#include <src/main.hpp>
 
 Camera::Camera(){};
 
@@ -38,30 +36,6 @@ Camera::Camera
 }
 
 void Camera::updateFront(float xTurnAmount,float yTurnAmount){
-	// glm::vec3 turnVectorX(glm::normalize(glm::cross(Camera::cameraFront,Camera::cameraUp)));
-	// glm::vec3 turnVectorY(glm::normalize(glm::cross(turnVectorX,Camera::cameraFront)));
-
-	// float cos89{0.017452};
-	// float lookLeftRightRate{glm::dot(Camera::cameraFront,Camera::cameraFrontProjected)};
-
-	// //	only y addition
-	// Camera::cameraFront =	Camera::cameraFront + 
-	// 			Camera::mouseSens * yTurnAmount * turnVectorY * deltaTime;
-				
-
-	// float cosAngle = glm::dot(Camera::cameraFrontProjected, Camera::cameraFront);
-	// float ySigne{(Camera::cameraFront.y<0?-1.0f:1.0f)};
-
-	// //	to fix when crossing the 89 degree pitch angle
-	// if(cosAngle<0){
-	// 	//Camera::cameraFront=ySigne * (Camera::cameraUp);
-	// 	Camera::cameraFront= glm::normalize(Camera::cameraFront + cos89/cosAngle * yTurnAmount);
-	// }
-	// Camera::cameraFront =	Camera::cameraFront + 
-	// 			Camera::mouseSens * xTurnAmount * turnVectorX * deltaTime * lookLeftRightRate +
-	// Camera::cameraFrontProjected = glm::normalize(Camera::cameraFrontProjected + Camera::mouseSens * xTurnAmount * turnVectorX * deltaTime * lookLeftRightRate);
-
-	// Camera::cameraFront =	glm::normalize(Camera::cameraFront);
 
 	glm::vec3 lookinDirection{
 		cos(glm::radians(yaw)) * cos(glm::radians(pitch)),
@@ -153,6 +127,9 @@ void Camera::setPitch(float pitch){
 }
 void Camera::setMouseSens(float sens){
 	Camera::mouseSens = sens;
+}
+void Camera::setAspectRatio(float aspectRatio){
+	Camera::aspectRatio=aspectRatio;
 }
 
 

@@ -1,0 +1,66 @@
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_draw.cpp -o obj_files/imgui_draw.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_widgets.cpp -o obj_files/imgui_widgets.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/stb_image.cpp -o obj_files/stb_image.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_impl_opengl3.cpp -o obj_files/imgui_impl_opengl3.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_tables.cpp -o obj_files/imgui_tables.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui.cpp -o obj_files/imgui.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_demo.cpp -o obj_files/imgui_demo.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_impl_glfw.cpp -o obj_files/imgui_impl_glfw.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/glad.c -o obj_files/glad.o -lglfw -ldl -lassimp -lstdc++fs
+>>includes
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine include/someSemblantOfAGameEngine/custom_gl_callbacks.cpp -o obj_files/custom_gl_callbacks.o -lglfw -ldl -lassimp -lstdc++fs
+>>includes
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine include/someSemblantOfAGameEngine/customDataTypes.cpp -o obj_files/customDataTypes.o -lglfw -ldl -lassimp -lstdc++fs
+>>includes
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine include/someSemblantOfAGameEngine/shader.cpp -o obj_files/shader.o -lglfw -ldl -lassimp -lstdc++fs
+>>includes
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine include/someSemblantOfAGameEngine/imGuiCustomFunctions.cpp -o obj_files/imGuiCustomFunctions.o -lglfw -ldl -lassimp -lstdc++fs
+>>includes
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine include/someSemblantOfAGameEngine/CommonUsedFunctions.cpp -o obj_files/CommonUsedFunctions.o -lglfw -ldl -lassimp -lstdc++fs
+>>includes
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine include/someSemblantOfAGameEngine/differentInits.cpp -o obj_files/differentInits.o -lglfw -ldl -lassimp -lstdc++fs
+>>includes
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine include/someSemblantOfAGameEngine/camera.cpp -o obj_files/camera.o -lglfw -ldl -lassimp -lstdc++fs
+>>src
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine src/main.cpp -o obj_files/main.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_draw.cpp -o obj_files/imgui_draw.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_widgets.cpp -o obj_files/imgui_widgets.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/stb_image.cpp -o obj_files/stb_image.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_impl_opengl3.cpp -o obj_files/imgui_impl_opengl3.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_tables.cpp -o obj_files/imgui_tables.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui.cpp -o obj_files/imgui.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_demo.cpp -o obj_files/imgui_demo.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_impl_glfw.cpp -o obj_files/imgui_impl_glfw.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/glad.c -o obj_files/glad.o -lglfw -ldl -lassimp -lstdc++fs
+>>includes
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine include/someSemblantOfAGameEngine/custom_gl_callbacks.cpp -o obj_files/custom_gl_callbacks.o -lglfw -ldl -lassimp -lstdc++fs
+>>includes
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine include/someSemblantOfAGameEngine/customDataTypes.cpp -o obj_files/customDataTypes.o -lglfw -ldl -lassimp -lstdc++fs
+>>includes
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine include/someSemblantOfAGameEngine/shader.cpp -o obj_files/shader.o -lglfw -ldl -lassimp -lstdc++fs
+>>includes
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine include/someSemblantOfAGameEngine/imGuiCustomFunctions.cpp -o obj_files/imGuiCustomFunctions.o -lglfw -ldl -lassimp -lstdc++fs
+>>includes
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine include/someSemblantOfAGameEngine/CommonUsedFunctions.cpp -o obj_files/CommonUsedFunctions.o -lglfw -ldl -lassimp -lstdc++fs
+>>includes
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine include/someSemblantOfAGameEngine/differentInits.cpp -o obj_files/differentInits.o -lglfw -ldl -lassimp -lstdc++fs
+>>includes
+g++ -g -std=c++17 -c -I/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine include/someSemblantOfAGameEngine/camera.cpp -o obj_files/camera.o -lglfw -ldl -lassimp -lstdc++fs

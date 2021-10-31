@@ -15,7 +15,6 @@
 //	image data retrieving
 #include <libs/stb_image.h>
 
-
 class Camera{
 	private:
 		float rightFlag{0};
@@ -78,6 +77,7 @@ class Camera{
 		void setYaw(float yaw);
 		void setPitch(float pitch);
 		void setMouseSens(float sens);
+		void setAspectRatio(float aspectRatio);
 };
 
 #endif

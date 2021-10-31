@@ -1,116 +1,19 @@
 #include <src/main.hpp>
 
 int main(int argc, char *argv[]){
-	//	opengl init
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR,3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR,3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE,GLFW_OPENGL_CORE_PROFILE);
-
-	//	window creation
-	GLFWwindow *window1 = glfwCreateWindow(window::width,window::height,"multiple cube rendering",NULL,NULL);
-	if(window1==NULL){
-		std::cout<<"ERROR::GLFW >> couldn't create window.\n";
-		glfwTerminate();
-		return -1;
-	}
-
-	//	setting different contextes and callbacks
-	glfwMakeContextCurrent(window1);	
-	glfwSetFramebufferSizeCallback(window1,framebuffer_size_callback);
-	glfwSetInputMode(window1,GLFW_CURSOR,GLFW_CURSOR_DISABLED);
-	glfwSetCursorPosCallback(window1,mouseCallback);
+	glfwInits::init();
+	GLFWwindow* window1 = glfwInits::initWindow(window::width,window::height);
+	if(window1==nullptr)	return -1;
 
 	//	callbacks association
 	glfwSetKeyCallback(window1,key_input_callback);
+	glfwSetCursorPosCallback(window1,mouseCallback);
+	glfwSetFramebufferSizeCallback(window1,framebuffer_size_callback);
 	
+	if(gladInits::init()==-1)	return -1;
 
-	//	glad init
-	if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
-		std::cout<<"ERROR::GLAD >> couldn't load the glad resources.\n";
-		glfwTerminate();
-		return -1;
-	}
-
-	//	some data
-	float vertices[] ={
-		// positions          // normals           // texture coords
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
-		0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
-		0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-		0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
-
-		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
-		0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 0.0f,
-		0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
-		0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
-
-		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-
-		0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-		0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
-		0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-		0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-		0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
-		0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
-		0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
-		0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-		0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
-
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
-		0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
-		0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
-		0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
-	};	//	36 vertices lol
-
-	glm::vec3 cubePositions[] = {
-		glm::vec3( 0.0f,  0.0f,  0.0f),
-		glm::vec3( 2.0f,  5.0f, -15.0f),
-		glm::vec3(-1.5f, -2.2f, -2.5f),
-		glm::vec3(-3.8f, -2.0f, -12.3f),
-		glm::vec3( 2.4f, -0.4f, -3.5f),
-		glm::vec3(-1.7f,  3.0f, -7.5f),
-		glm::vec3( 1.3f, -2.0f, -2.5f),
-		glm::vec3( 1.5f,  2.0f, -2.5f),
-		glm::vec3( 1.5f,  0.2f, -1.5f),
-		glm::vec3(-1.3f,  1.0f, -1.5f)
-	};	//	10 of em
-
-	glm::vec3 lightPosition[] = {
-		glm::vec3( 0.7f,  0.2f,  2.0f),
-		glm::vec3( 2.3f, -3.3f, -4.0f),
-		glm::vec3(-4.0f,  2.0f, -12.0f),
-		glm::vec3( 0.0f,  0.0f, -3.0f),
-		glm::vec3( -1.0f,  5.0f, 12.0f)
-	};
-
-#ifdef NORMAL_LIGHTING
-	Shader shaderProgram("./src/shaders/vertexShader.vert","./src/shaders/fragmentShader.frag");
-#endif
-#ifdef DIRECTIONAL_LIGHTING
-	Shader shaderProgram("./src/shaders/vertexShader.vert","./src/shaders/fragmentShaderDirectionalLight.frag");
-#endif
-#ifdef SPOT_LIGHTING
-	Shader shaderProgram("./src/shaders/vertexShader.vert","./src/shaders/fragmentShaderSpotLight.frag");
-#endif
-#ifdef ALL_LIGHTING
 	Shader shaderProgram("./src/shaders/vertexShader.vert","./src/shaders/fragmentShaderAllLights.frag");
-#endif
+
 	Shader lightShaderProgram("./src/shaders/vertexShader.vert","./src/shaders/lightFragmentShader.frag");
 	
 	shaderProgram.use();
@@ -212,16 +115,6 @@ int main(int argc, char *argv[]){
 	shaderProgram.setInt("material.texture_emission",2);
 	shaderProgram.setFloat("mixAmount",.4f);
 
-	camera=Camera(
-		glm::vec3(0.0f,0.0f,3.0f),
-		glm::vec3(0.0f,0.0f,-1.0f),
-		glm::vec3(0.0f,1.0f,0.0f),
-		45.0f,
-		window::width/window::height,
-		0.1f,
-		100.0f
-	);
-
 	
 	camera.setMouseSens(0.1f);
 	camera.setSpeed(5.0f);
@@ -232,7 +125,20 @@ int main(int argc, char *argv[]){
 
 	shaderProgram.use();
 	stbi_set_flip_vertically_on_load(true);
-	Model modelone(std::filesystem::path("./models/backpack_obj/backpack.obj"));
+
+	//	dear ImGui shittery
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();	//			context creation for dear ImGui
+	ImGui::StyleColorsDark();//			specifying the style for dear ImGui
+
+	ImGui_ImplGlfw_InitForOpenGL(window1,true);//	setting up window for ImGui
+	ImGui_ImplOpenGL3_Init(glslVersion);
+
+	ImGui::FileBrowser fileDialog;
+	fileDialog.SetTitle("load model");
+	fileDialog.SetTypeFilters({".obj"});
+
+	//Model cubeModel(std::filesystem::path(""));
 
 	while(!glfwWindowShouldClose(window1)){
 
@@ -242,99 +148,58 @@ int main(int argc, char *argv[]){
 
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D,texture1);
-
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D,texture2);
-		
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D,texture3);
 		
 		glm::mat4 model{glm::mat4(1.0f)};
 		
 		camera.updatePosition();
-		
-		glm::vec3 	lightColor(1.0f);
-		glm::vec3	ambient{0.1f * lightColor};
-		glm::vec3	diffuse{0.7f * lightColor};		
-
+				
 		glBindVertexArray(VAO);
 		shaderProgram.use();
 
-		//	light stuff
+		// //	setting additional params to the lights
+		// for(int i=0;i<nbLights;i++){
+		// 	std::string lightNbr{"pointLight[0]."};
+		// 	std::string nbr{std::to_string(i)};
+		// 	lightNbr.replace(11,nbr.length(),nbr);
+		// 	std::string save = lightNbr;
 
-#ifdef ALL_LIGHTING
-		//	light params specification
-		shaderProgram.setVec3("dirLight.ambient",ambient);
-		shaderProgram.setVec3("dirLight.diffuse",diffuse);
-		shaderProgram.setVec3("dirLight.specular",lightColor);
-		shaderProgram.setVec3("dirLight.direction",lightSourceDirection);
+		// 	shaderProgram.setVec3(lightNbr.append("ambient").c_str(),ambient);lightNbr=save;
+		// 	shaderProgram.setVec3(lightNbr.append("diffuse").c_str(),diffuse);lightNbr=save;
+		// 	shaderProgram.setVec3(lightNbr.append("specular").c_str(),lightColor);lightNbr=save;
 
-		//	setting additional params to the lights
-		for(int i=0;i<nbLights;i++){
-			std::string lightNbr{"pointLight[0]."};
-			std::string nbr{std::to_string(i)};
-			lightNbr.replace(11,nbr.length(),nbr);
-			std::string save = lightNbr;
+		// 	shaderProgram.setFloat(lightNbr.append("kc").c_str(),kc);lightNbr=save;
+		// 	shaderProgram.setFloat(lightNbr.append("kl").c_str(),kl);lightNbr=save;
+		// 	shaderProgram.setFloat(lightNbr.append("kq").c_str(),kq);lightNbr=save;
 
-			shaderProgram.setVec3(lightNbr.append("ambient").c_str(),ambient);lightNbr=save;
-			shaderProgram.setVec3(lightNbr.append("diffuse").c_str(),diffuse);lightNbr=save;
-			shaderProgram.setVec3(lightNbr.append("specular").c_str(),lightColor);lightNbr=save;
+		// 	shaderProgram.setVec3(lightNbr.append("position").c_str(),lightPosition[i]);
+		// };
 
-			shaderProgram.setFloat(lightNbr.append("kc").c_str(),kc);lightNbr=save;
-			shaderProgram.setFloat(lightNbr.append("kl").c_str(),kl);lightNbr=save;
-			shaderProgram.setFloat(lightNbr.append("kq").c_str(),kq);lightNbr=save;
+		// //	spotLight params
+		// std::string lightNbr{"spotLight."};
+		// std::string save = lightNbr;
 
-			shaderProgram.setVec3(lightNbr.append("position").c_str(),lightPosition[i]);
-		};
+		// shaderProgram.setVec3(lightNbr.append("ambient").c_str(),ambient);lightNbr=save;
+		// shaderProgram.setVec3(lightNbr.append("diffuse").c_str(),diffuse);lightNbr=save;
+		// shaderProgram.setVec3(lightNbr.append("specular").c_str(),lightColor);lightNbr=save;
 
-		//	spotLight params
-		std::string lightNbr{"spotLight."};
-		std::string save = lightNbr;
+		// shaderProgram.setFloat(lightNbr.append("kc").c_str(),kc);lightNbr=save;
+		// shaderProgram.setFloat(lightNbr.append("kl").c_str(),kl);lightNbr=save;
+		// shaderProgram.setFloat(lightNbr.append("kq").c_str(),kq);lightNbr=save;
 
-		shaderProgram.setVec3(lightNbr.append("ambient").c_str(),ambient);lightNbr=save;
-		shaderProgram.setVec3(lightNbr.append("diffuse").c_str(),diffuse);lightNbr=save;
-		shaderProgram.setVec3(lightNbr.append("specular").c_str(),lightColor);lightNbr=save;
+		// shaderProgram.setVec3(lightNbr.append("position").c_str(),camera.getPos());lightNbr=save;
+		// shaderProgram.setVec3(lightNbr.append("direction").c_str(),camera.getFront());lightNbr=save;
 
-		shaderProgram.setFloat(lightNbr.append("kc").c_str(),kc);lightNbr=save;
-		shaderProgram.setFloat(lightNbr.append("kl").c_str(),kl);lightNbr=save;
-		shaderProgram.setFloat(lightNbr.append("kq").c_str(),kq);lightNbr=save;
-
-		shaderProgram.setVec3(lightNbr.append("position").c_str(),camera.getPos());lightNbr=save;
-		shaderProgram.setVec3(lightNbr.append("direction").c_str(),camera.getFront());lightNbr=save;
-
-		shaderProgram.setFloat(lightNbr.append("cutoffAngle").c_str(),glm::cos(glm::radians(cutoffAngle)));lightNbr=save;
-		shaderProgram.setFloat(lightNbr.append("innerCutoffAngle").c_str(),glm::cos(glm::radians(cutoffAngle-1)));
+		// shaderProgram.setFloat(lightNbr.append("cutoffAngle").c_str(),glm::cos(glm::radians(cutoffAngle)));lightNbr=save;
+		// shaderProgram.setFloat(lightNbr.append("innerCutoffAngle").c_str(),glm::cos(glm::radians(cutoffAngle-1)));
 		
-#endif
-		model=glm::mat4(1.0f);
 
 		//shaderProgram.setMat4("model",model);
 		shaderProgram.setMat4("view",camera.getCamera());
 		shaderProgram.setMat4("projection",camera.getProjection());
 		shaderProgram.setVec3("viewPos",camera.getPos());
 
-// 		glBindVertexArray(VAO);
-		shaderProgram.use();
-
 		//	material stuff
 		shaderProgram.setFloat("material.shininess", 64);
-
-// 		//	drawing cubes
-// 		for(unsigned int i = 0; i < 10; i++)
-// 		{
-// 		    glm::mat4 model = glm::mat4(1.0f);
-// 		    model = glm::translate(model, cubePositions[i]);
-// 		    float angle = 20.0f * i;
-// 		    model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-// 		    shaderProgram.setMat4("model", model);
-
-// 		    glDrawArrays(GL_TRIANGLES, 0, 36);
-// 		}
-
-#ifdef ALL_LIGHTING
 
 		glBindVertexArray(lightVAO);
 		lightShaderProgram.use();
@@ -353,18 +218,67 @@ int main(int argc, char *argv[]){
 			shaderProgram.setMat4("projection",camera.getProjection());
 			glDrawArrays(GL_TRIANGLES,0,36);
 		}
-#endif
-		shaderProgram.use();
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		model = glm::rotate(model,(float)glm::radians(50.0f * cos(glfwGetTime())),glm::vec3(0.0f,1.0f,0.0f));
-		shaderProgram.setMat4("model",model);
-		
-		modelone.draw(shaderProgram);
+
+		//	render loaded models
+		for(int i=0; i<loadedModels.size();i++)
+			if(!loadedModels[i].getIsALight())loadedModels[i].draw(shaderProgram);
+
+		for(int i=0; i<loadedLights.size();i++){
+			//	sets vars for the fragment shader of models
+			loadedLights[i].setVars(shaderProgram,i);
+			//	automatically set the vars for the fragment shader of the lights
+			loadedLights[i].draw(lightShaderProgram,i);
+		}
 
 		glBindVertexArray(0);
 
 		glfwPollEvents();
+		//	dearImGui stuff
+		//	create new frame
+		ImGui_ImplGlfw_NewFrame();
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui::NewFrame();
+
+		float sidePannelWidth=200.0f;
+		ImGuiWindowFlags rightSidePannelFlags = ImGuiWindowFlags_NoScrollbar|ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoSavedSettings;
+		ImGuiViewport* mainViewport=ImGui::GetMainViewport();
+
+		if(ImGui::BeginViewportSideBar("#rightSidePannel",mainViewport,ImGuiDir_Right,sidePannelWidth,rightSidePannelFlags)){
+			for(int i=0;i<loadedModels.size();i++){
+				ImGui::Text(loadedModels[i].getModelName().c_str());
+			}
+			ImGui::End();	
+		}
+
+		if(ImGui::BeginMainMenuBar()){
+			if(ImGui::BeginMenu("File")){
+				if(ImGui::MenuItem("load model")){
+					fileDialog.Open();
+				}
+				ImGui::EndMenu();
+			}
+			ImGui::EndMainMenuBar();
+		}
+		
+		//	displays the dialog when clicked
+		
+		fileDialog.Display();
+
+		if(fileDialog.HasSelected()){
+			std::string slectedModelPath=fileDialog.GetSelected().string();
+			std::cout<<"slected file path: "<<slectedModelPath<<'\n';
+			//	pas in the default model matrix lol
+			loadedModels.push_back(Model(slectedModelPath,model));
+			fileDialog.ClearSelected();
+		}
+
+		//		renderWindow
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		
 		glfwSwapBuffers(window1);
+		
+
 	}
 
 	shaderProgram.cleanup();

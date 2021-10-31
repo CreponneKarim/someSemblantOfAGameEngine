@@ -31,6 +31,15 @@ $(objDir)/%.o:$(libsDir)/%.c
 	@echo ">>libs"
 	$(CC) $(CVERSION) $(CFLAGS) $(INCLUDES) $(filter $(libsDir)/%.c,$^) -o $@ $(external_dependencies)
 
+$(objDir)/%.o:$(libsDir)/%.cpp $(libsDir)/%.hpp
+	@echo ">>libs"
+	$(CC) $(CVERSION) $(CFLAGS) $(INCLUDES) $(filter $(libsDir)/%.cpp,$^) -o $@ $(external_dependencies)
+
+$(objDir)/%.o:$(libsDir)/%.cpp
+	@echo ">>libs"
+	$(CC) $(CVERSION) $(CFLAGS) $(INCLUDES) $(filter $(libsDir)/%.cpp,$^) -o $@ $(external_dependencies)
+
+
 #includes
 $(objDir)/%.o:$(includesDir)/%.cpp $(includesDir)/%.hpp
 	@echo ">>includes"

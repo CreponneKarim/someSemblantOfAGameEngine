@@ -1,0 +1,10 @@
+
+
+
+
+
+
+## still not done
+	- fix opengl window resizing (rendered stuff gets stretched)
+
+## done

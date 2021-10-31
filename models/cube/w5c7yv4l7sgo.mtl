@@ -1,0 +1,10 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v4.1.0)
+
+newmtl Physical
+Kd 0.6901960968971252 0.6901960968971252 0.6901960968971252
+Ka 0 0 0
+Ks 0.0199215691536665 0.0199215691536665 0.0199215691536665
+Ns 50
+illum 2
+

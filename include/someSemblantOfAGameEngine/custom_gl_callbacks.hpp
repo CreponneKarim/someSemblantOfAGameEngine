@@ -16,6 +16,8 @@
 #include <libs/stb_image.h>
 #include <src/main.hpp>
 
+#include <include/someSemblantOfAGameEngine/sharedGlobalVars.hpp>
+
 namespace callbackGlobals{
 	inline int cameraNumber;
 	inline int lastMouseXpos{window::width/2};
