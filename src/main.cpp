@@ -127,25 +127,18 @@ int main(int argc, char *argv[]){
 	stbi_set_flip_vertically_on_load(true);
 
 	//	dear ImGui shittery
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();	//			context creation for dear ImGui
-	ImGui::StyleColorsDark();//			specifying the style for dear ImGui
+	ImGuiPersonal::init(window1);
 
-	ImGui_ImplGlfw_InitForOpenGL(window1,true);//	setting up window for ImGui
-	ImGui_ImplOpenGL3_Init(glslVersion);
+	Model cubeModel(std::filesystem::path("/home/creponnekarim/my_progs/cpp_progs/someSemblantOfAGameEngine/models/cube/w5c7yv4l7sgo.obj"));
+	loadedStuff::loadedLights.push_back(Light(	LightVars::kcDefault,
+							LightVars::klDefault,
+							LightVars::kqDefault,
+							LightVars::ambientDefault,
+							LightVars::diffuseDefault,
+							LightVars::lightColorDefault,
+							&cubeModel)
+						);
 
-	ImGui::FileBrowser fileDialog;
-	fileDialog.SetTitle("load model");
-	fileDialog.SetTypeFilters({".obj"});
-
-	Model cubeModel(std::filesystem::path("/home/karim/my_progs/cpp_progs/someSemblantOfAGameEngine/models/cube/w5c7yv4l7sgo.obj"));
-	Light light(	LightVars::kcDefault,
-			LightVars::klDefault,
-			LightVars::kqDefault,
-			LightVars::ambientDefault,
-			LightVars::diffuseDefault,
-			LightVars::lightColorDefault,
-			&cubeModel);
 
 	while(!glfwWindowShouldClose(window1)){
 
@@ -161,136 +154,40 @@ int main(int argc, char *argv[]){
 		camera.updatePosition();
 				
 		glBindVertexArray(VAO);
-		shaderProgram.use();
 
 		//	camera settings
-		lightShaderProgram.use();
-		lightShaderProgram.setMat4("view",camera.getCamera());
-		lightShaderProgram.setMat4("projection",camera.getProjection());
+		lightShaderProgram.setCameraVars(camera.getCamera(),camera.getProjection(),camera.getPos());
 
-		light.draw(lightShaderProgram,0);
-
-		// //	setting additional params to the lights
-		// for(int i=0;i<nbLights;i++){
-		// 	std::string lightNbr{"pointLight[0]."};
-		// 	std::string nbr{std::to_string(i)};
-		// 	lightNbr.replace(11,nbr.length(),nbr);
-		// 	std::string save = lightNbr;
-
-		// 	shaderProgram.setVec3(lightNbr.append("ambient").c_str(),ambient);lightNbr=save;
-		// 	shaderProgram.setVec3(lightNbr.append("diffuse").c_str(),diffuse);lightNbr=save;
-		// 	shaderProgram.setVec3(lightNbr.append("specular").c_str(),lightColor);lightNbr=save;
-
-		// 	shaderProgram.setFloat(lightNbr.append("kc").c_str(),kc);lightNbr=save;
-		// 	shaderProgram.setFloat(lightNbr.append("kl").c_str(),kl);lightNbr=save;
-		// 	shaderProgram.setFloat(lightNbr.append("kq").c_str(),kq);lightNbr=save;
-
-		// 	shaderProgram.setVec3(lightNbr.append("position").c_str(),lightPosition[i]);
-		// };
-
-		// //	spotLight params
-		// std::string lightNbr{"spotLight."};
-		// std::string save = lightNbr;
-
-		// shaderProgram.setVec3(lightNbr.append("ambient").c_str(),ambient);lightNbr=save;
-		// shaderProgram.setVec3(lightNbr.append("diffuse").c_str(),diffuse);lightNbr=save;
-		// shaderProgram.setVec3(lightNbr.append("specular").c_str(),lightColor);lightNbr=save;
-
-		// shaderProgram.setFloat(lightNbr.append("kc").c_str(),kc);lightNbr=save;
-		// shaderProgram.setFloat(lightNbr.append("kl").c_str(),kl);lightNbr=save;
-		// shaderProgram.setFloat(lightNbr.append("kq").c_str(),kq);lightNbr=save;
-
-		// shaderProgram.setVec3(lightNbr.append("position").c_str(),camera.getPos());lightNbr=save;
-		// shaderProgram.setVec3(lightNbr.append("direction").c_str(),camera.getFront());lightNbr=save;
-
-		// shaderProgram.setFloat(lightNbr.append("cutoffAngle").c_str(),glm::cos(glm::radians(cutoffAngle)));lightNbr=save;
-		// shaderProgram.setFloat(lightNbr.append("innerCutoffAngle").c_str(),glm::cos(glm::radians(cutoffAngle-1)));
-		
+		for(int i=0; i<loadedStuff::loadedLights.size();i++){
+			//	automatically set the vars for the fragment shader of the lights
+			//loadedStuff::loadedLights[i].
+			loadedStuff::loadedLights[i].draw(lightShaderProgram,i);
+		}
 
 		//shaderProgram.setMat4("model",model);
-		shaderProgram.setMat4("view",camera.getCamera());
-		shaderProgram.setMat4("projection",camera.getProjection());
-		shaderProgram.setVec3("viewPos",camera.getPos());
+		shaderProgram.setCameraVars(camera.getCamera(),camera.getProjection(),camera.getPos());
 
 		//	material stuff
+		shaderProgram.use();
+		//	different shader program
+		for(int i=0; i<loadedStuff::loadedLights.size();i++){
+			//	sets vars for the fragment shader of models
+			loadedStuff::loadedLights[i].setVars(shaderProgram,i);
+		}
+		
 		shaderProgram.setFloat("material.shininess", 64);
 
-		glBindVertexArray(lightVAO);
-		// lightShaderProgram.use();
-
-		// lightShaderProgram.setVec3("lightColor",lightColor);
-
-		// //	draw the different lights
-		// for(int i=0;i<nbLights;i++){	
-
-		// 	glm::mat4 model(1.0f);
-		// 	model = glm::translate(model,lightPosition[i]);
-		// 	model = glm::scale(model,glm::vec3(0.2f));
-
-		// 	shaderProgram.setMat4("model",model);
-		// 	shaderProgram.setMat4("view",camera.getCamera());
-		// 	shaderProgram.setMat4("projection",camera.getProjection());
-		// 	glDrawArrays(GL_TRIANGLES,0,36);
-		// }
-		
 		//	render loaded models
-		for(int i=0; i<loadedModels.size();i++)
-			if(!loadedModels[i].getIsALight())loadedModels[i].draw(shaderProgram);
-
-		for(int i=0; i<loadedLights.size();i++){
-			//	sets vars for the fragment shader of models
-			loadedLights[i].setVars(shaderProgram,i);
-			//	automatically set the vars for the fragment shader of the lights
-			loadedLights[i].draw(lightShaderProgram,i);
-		}
+		for(int i=0; i<loadedStuff::loadedModels.size();i++)
+			loadedStuff::loadedModels[i].draw(shaderProgram);
 
 		glBindVertexArray(0);
 
 		glfwPollEvents();
 		
 		//	dearImGui stuff
-		//	create new frame
-		ImGui_ImplGlfw_NewFrame();
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui::NewFrame();
+		ImGuiPersonal::createAll();
 
-		float sidePannelWidth=200.0f;
-		ImGuiWindowFlags rightSidePannelFlags = ImGuiWindowFlags_NoScrollbar|ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoSavedSettings;
-		ImGuiViewport* mainViewport=ImGui::GetMainViewport();
-
-		if(ImGui::BeginViewportSideBar("#rightSidePannel",mainViewport,ImGuiDir_Right,sidePannelWidth,rightSidePannelFlags)){
-			for(int i=0;i<loadedModels.size();i++){
-				ImGui::Text(loadedModels[i].getModelName().c_str());
-			}
-			ImGui::End();	
-		}
-
-		if(ImGui::BeginMainMenuBar()){
-			if(ImGui::BeginMenu("File")){
-				if(ImGui::MenuItem("load model")){
-					fileDialog.Open();
-				}
-				ImGui::EndMenu();
-			}
-			ImGui::EndMainMenuBar();
-		}
-		
-		//	displays the dialog when clicked
-		
-		fileDialog.Display();
-
-		if(fileDialog.HasSelected()){
-			std::string slectedModelPath=fileDialog.GetSelected().string();
-			std::cout<<"slected file path: "<<slectedModelPath<<'\n';
-			//	pas in the default model matrix lol
-			loadedModels.push_back(Model(slectedModelPath,model));
-			fileDialog.ClearSelected();
-		}
-
-		//		renderWindow
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-		
 		glfwSwapBuffers(window1);
 	}
 

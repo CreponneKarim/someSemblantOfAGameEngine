@@ -123,6 +123,13 @@ class Shader{
 		void setMat4(const char *name, glm::mat4 transformation_matrix)const{
 			glUniformMatrix4fv(glGetUniformLocation(programId,name),1,GL_FALSE,glm::value_ptr(transformation_matrix));
 		}
+		void setCameraVars(glm::mat4 view, glm::mat4 projection, glm::vec3 position){
+			Shader::use();
+		
+			Shader::setMat4("view",view);
+			Shader::setMat4("projection",projection);
+			Shader::setVec3("position",position);
+		}
 
 		void cleanup(){
 			glDeleteProgram(programId);

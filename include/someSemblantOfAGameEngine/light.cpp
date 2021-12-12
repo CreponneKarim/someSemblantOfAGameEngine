@@ -22,8 +22,6 @@ Light::Light(	float kc,
 }
 Light::Light(){}
 void Light::setVars(Shader &shader_, int lightIndex){
-	shader_.use();
-
 	std::string lightNbr{"pointLight[0]."};
 	std::string nbr{std::to_string(lightIndex)};
 	lightNbr.replace(11,nbr.length(),nbr);
@@ -37,6 +35,7 @@ void Light::setVars(Shader &shader_, int lightIndex){
 	shader_.setFloat(lightNbr.append("kl").c_str(),Light::kl);lightNbr=save;
 	shader_.setFloat(lightNbr.append("kq").c_str(),Light::kq);lightNbr=save;
 
+	//	for light shader
 	shader_.setFloat(lightNbr.append("lightColor").c_str(),Light::kq);lightNbr=save;
 }
 void Light::draw(Shader &shader, int lightIndex){

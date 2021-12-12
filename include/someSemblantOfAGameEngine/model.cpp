@@ -10,8 +10,6 @@ Model::Model(std::string path,glm::mat4 model){
 	Model::model=model;
 }
 void Model::draw(Shader &shader){
-	shader.use();
-	
 	shader.setMat4("model",model);
 	for(int i=0;i<Model::meshes.size();i++)
 		Model::meshes[i].draw(shader);

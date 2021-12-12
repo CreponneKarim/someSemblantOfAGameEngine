@@ -33,6 +33,7 @@
 #include <include/someSemblantOfAGameEngine/differentInits.hpp>
 #include <libs/imfilebrowser.h>
 #include <libs/imgui_internal.h>
+#include <include/someSemblantOfAGameEngine/imGuiCustomFunctions.hpp>
 
 inline int cameraNumber;
 inline constexpr unsigned short cameraCount{1};
@@ -118,8 +119,6 @@ inline glm::vec3 lightPosition[] = {
 	glm::vec3( -1.0f,  5.0f, 12.0f)
 };
 
-inline std::vector<Model> loadedModels;
-inline std::vector<Light> loadedLights;
 
 inline Camera camera =	Camera(
 			glm::vec3(0.0f,0.0f,3.0f),
