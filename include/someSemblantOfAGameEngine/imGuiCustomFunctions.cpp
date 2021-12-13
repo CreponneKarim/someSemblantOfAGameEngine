@@ -54,8 +54,8 @@ void ImGuiPersonal::createObjectsSettings(){
 				&& selectedModel!=nullptr)
 	{
 		ImGui::Text((ImGuiPersonal::selectedModel->getModelName()+ " settings").c_str());
+		ImGui::EndChild();
 	}
-	ImGui::EndChild();
 }
 
 void ImGuiPersonal::createSideMenu(){
@@ -65,23 +65,38 @@ void ImGuiPersonal::createSideMenu(){
 
 	if(ImGui::BeginViewportSideBar("#rightSidePannel",mainViewport,ImGuiDir_Right,sidePannelWidth,rightSidePannelFlags)){
 		
-		ImVec2 loadedObjectsDims=ImVec2(0.0f,200.0f);
-		ImGuiWindowFlags loadedObjectsFlags=ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoSavedSettings;
-		if(ImGui::BeginChild(	"#rightSidePannelLoadedObjects",
-					loadedObjectsDims,
-					true,
-					loadedObjectsFlags))
-		{
-			for(int i=0;i<loadedStuff::loadedModels.size();i++){
-				std::string objName= loadedStuff::loadedModels[i].getModelName();
-				if(ImGui::Button(objName.c_str(),ImVec2(0.0f,0.0f))){
-					ImGuiPersonal::selectedModel=&(loadedStuff::loadedModels[i]); 
-				}
-			}
-			ImGui::EndChild();
-		}
-		ImGuiPersonal::createObjectsSettings();		
-		ImGui::End();
+		ImVec2 loadedObjectsDims=ImVec2(0.0f,sidePannelWidth);
+		ImGuiWindowFlags loadedObjectsFlags=	ImGuiWindowFlags_NoMove|
+							ImGuiWindowFlags_NoSavedSettings;
+
+
+		// ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize,0.0f);
+		// ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding,ImVec2(0.0f,0.0f));
+			
+			
+		loadedObjectsFlags=	ImGuiWindowFlags_NoScrollWithMouse|
+					ImGuiWindowFlags_NoMove|
+					ImGuiWindowFlags_MenuBar;
+		// if(ImGui::BeginChild(	"#rightSidePannelLoadedObjectsTopBar",
+		// 			ImVec2(0.0f,0.0f),
+		// 			true,
+		// 			loadedObjectsFlags))
+		// {
+		// 	ImGui::EndChild();	
+		// }
+
+		// loadedObjectsFlags=	ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoSavedSettings;
+		// if(ImGui::BeginChild(	"#rightSidePannelLoadedObjectsInner",
+		// 			ImVec2(0.0f,0.0f),
+		// 			true,
+		// 			loadedObjectsFlags))
+		// {
+		// 	ImGui::EndChild();	
+		// }
+	
+		//ImGui::PopStyleVar(2);
+		ImGuiPersonal::createObjectsSettings();
+		ImGui::End();	
 	}
 }
 

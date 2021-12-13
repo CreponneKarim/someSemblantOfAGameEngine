@@ -44,69 +44,6 @@ int main(int argc, char *argv[]){
 	glVertexAttribPointer(0,3,GL_FLOAT,false,8 * sizeof(float),(void *) 0);
 	glEnableVertexAttribArray(0);
 	//	texture
-	unsigned int texture1,texture2,texture3;
-	glGenTextures(1,&texture1);
-	glBindTexture(GL_TEXTURE_2D,texture1);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-
-	//	load images
-	int imgWidth1,imgWidth2,imgHeight1,imgHeight2,nbrChannels1,nbrChannels2;
-	unsigned char *image1{stbi_load("./images/container2.png",&imgWidth1,&imgHeight1,&nbrChannels1,0)};
-	
-	if(image1==NULL){
-		std::cout<<"ERROR::STBI>> couldn't load image1.\n";
-		glfwTerminate();
-		return -1;
-	}
-
-	glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,imgWidth1,imgHeight1,0,GL_RGBA,GL_UNSIGNED_BYTE,image1);
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	stbi_image_free(image1);
-	
-	glGenTextures(1,&texture2);
-	glBindTexture(GL_TEXTURE_2D,texture2);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-
-	//	reverse image 2
-	unsigned char *image2{stbi_load("./images/container2_specular.png",&imgWidth2,&imgHeight2,&nbrChannels2,0)};
-	
-	if(image2==NULL){
-		std::cout<<"ERROR::STBI>> couldn't load image2.\n";
-		glfwTerminate();
-		return -1;
-	}
-
-	glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,imgWidth2,imgHeight2,0,GL_RGBA,GL_UNSIGNED_BYTE,image2);
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	stbi_image_free(image2);
-
-	glGenTextures(1,&texture3);
-	glBindTexture(GL_TEXTURE_2D,texture3);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-	
-
-	int height3,width3,nbrChannels3;
-	unsigned char *image3{stbi_load("./images/container2_emission.jpg",&width3,&height3,&nbrChannels3,0)};
-	if(image3==NULL){
-		std::cout<<"ERROR::STBI>> couldn't load image3.\n";
-		glfwTerminate();
-		return -1;
-	}
-	glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,width3,height3,0,GL_RGB,GL_UNSIGNED_BYTE,image3);
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	stbi_image_free(image3);
 
 	glBindVertexArray(0);
 
@@ -129,7 +66,7 @@ int main(int argc, char *argv[]){
 	//	dear ImGui shittery
 	ImGuiPersonal::init(window1);
 
-	Model cubeModel(std::filesystem::path("/home/creponnekarim/my_progs/cpp_progs/someSemblantOfAGameEngine/models/cube/w5c7yv4l7sgo.obj"));
+	Model cubeModel(std::filesystem::path("models/cube/w5c7yv4l7sgo.obj"));
 	loadedStuff::loadedLights.push_back(Light(	LightVars::kcDefault,
 							LightVars::klDefault,
 							LightVars::kqDefault,
