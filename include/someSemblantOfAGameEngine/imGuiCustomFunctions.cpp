@@ -54,15 +54,20 @@ void ImGuiPersonal::createObjectsSettings(){
 				&& selectedModel!=nullptr)
 	{
 		ImGui::Text((ImGuiPersonal::selectedModel->getModelName()+ " settings").c_str());
-		ImGui::EndChild();
 	}
+	ImGui::EndChild();
 }
 
 void ImGuiPersonal::createSideMenu(){
 	float sidePannelWidth=200.0f;
+
 	ImGuiWindowFlags rightSidePannelFlags = ImGuiWindowFlags_NoScrollbar|ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoSavedSettings;
 	ImGuiViewport* mainViewport=ImGui::GetMainViewport();
-
+	// ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding,ImVec2(0.0f,0.0f));
+	
+	//	to remove padding between child windows
+	ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize,0.0f);		
+	
 	if(ImGui::BeginViewportSideBar("#rightSidePannel",mainViewport,ImGuiDir_Right,sidePannelWidth,rightSidePannelFlags)){
 		
 		ImVec2 loadedObjectsDims=ImVec2(0.0f,sidePannelWidth);
@@ -70,34 +75,34 @@ void ImGuiPersonal::createSideMenu(){
 							ImGuiWindowFlags_NoSavedSettings;
 
 
-		// ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize,0.0f);
-		// ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding,ImVec2(0.0f,0.0f));
-			
 			
 		loadedObjectsFlags=	ImGuiWindowFlags_NoScrollWithMouse|
-					ImGuiWindowFlags_NoMove|
-					ImGuiWindowFlags_MenuBar;
-		// if(ImGui::BeginChild(	"#rightSidePannelLoadedObjectsTopBar",
-		// 			ImVec2(0.0f,0.0f),
-		// 			true,
-		// 			loadedObjectsFlags))
-		// {
-		// 	ImGui::EndChild();	
-		// }
+					ImGuiWindowFlags_NoMove;
 
-		// loadedObjectsFlags=	ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoSavedSettings;
-		// if(ImGui::BeginChild(	"#rightSidePannelLoadedObjectsInner",
-		// 			ImVec2(0.0f,0.0f),
-		// 			true,
-		// 			loadedObjectsFlags))
-		// {
-		// 	ImGui::EndChild();	
-		// }
+		ImVec2 menubarDims(0.0f,20.0f);
+		if(ImGui::BeginChild(	"#rightSidePannelLoadedObjectsTopBar",
+					menubarDims,
+					true,
+					loadedObjectsFlags))
+		{
+			if(ImGui::Button("+ object",ImVec2(0.0f,0.0f))){
+				std::cout<<"some rather sus shit\n";
+			}
+		}ImGui::EndChild();
+
+		loadedObjectsFlags=	ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoSavedSettings;
+		ImVec2 objectsMenuDims(0.0f,200.0f);
+		if(ImGui::BeginChild(	"#rightSidePannelLoadedObjectsInner",
+					ImVec2(0.0f,200.0f),
+					true,
+					loadedObjectsFlags))
+		{	
+		}ImGui::EndChild();
 	
-		//ImGui::PopStyleVar(2);
 		ImGuiPersonal::createObjectsSettings();
-		ImGui::End();	
-	}
+	}ImGui::End();
+	ImGui::PopStyleVar(1);
+		
 }
 
 void ImGuiPersonal::createAll(){
