@@ -2,6 +2,7 @@
 #define DIFFERENTINITS_HPP
 
 #include <iostream>
+#include <string>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -17,7 +18,7 @@
 namespace glfwInits{
 	//	returns -1 if error
 	int init();
-	GLFWwindow* initWindow(int width,int height);
+	GLFWwindow* initWindow(int width,int height,std::string name);
 }
 namespace gladInits{
 	//	returns -1 if error

@@ -28,7 +28,8 @@ namespace ImGuiPersonal{
 	void createSideMenu();
 	void createAll();
 	void createObjectsSettings();
-
+	void createAddObjectFromLoaded();
+	void createAddObjectFromFile();
 }
 
 #endif

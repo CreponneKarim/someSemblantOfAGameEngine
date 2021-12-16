@@ -12,9 +12,9 @@ int glfwInits::init(){
 	return 0;
 }
 
-GLFWwindow* glfwInits::initWindow(int width,int height){
+GLFWwindow* glfwInits::initWindow(int width,int height,std::string name){
 	//	window creation
-	GLFWwindow *window1 = glfwCreateWindow(width,height,"multiple cube rendering",NULL,NULL);
+	GLFWwindow *window1 = glfwCreateWindow(width,height,name.c_str(),NULL,NULL);
 	if(window1==NULL){
 		std::cout<<"ERROR::GLFW >> couldn't create window.\n";
 		glfwTerminate();

@@ -35,10 +35,8 @@ class Model;
 class Light;
 
 namespace loadedStuff{
-
 	inline std::vector<Model> loadedModels;
 	inline std::vector<Light> loadedLights;
 }
-
 
 #endif

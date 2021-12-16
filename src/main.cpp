@@ -2,7 +2,7 @@
 
 int main(int argc, char *argv[]){
 	glfwInits::init();
-	GLFWwindow* window1 = glfwInits::initWindow(window::width,window::height);
+	GLFWwindow* window1 = glfwInits::initWindow(window::width,window::height,"name");
 	if(window1==nullptr)	return -1;
 
 	//	callbacks association
@@ -67,6 +67,7 @@ int main(int argc, char *argv[]){
 	ImGuiPersonal::init(window1);
 
 	Model cubeModel(std::filesystem::path("models/cube/w5c7yv4l7sgo.obj"));
+	loadedStuff::loadedModels.push_back(cubeModel);
 	loadedStuff::loadedLights.push_back(Light(	LightVars::kcDefault,
 							LightVars::klDefault,
 							LightVars::kqDefault,

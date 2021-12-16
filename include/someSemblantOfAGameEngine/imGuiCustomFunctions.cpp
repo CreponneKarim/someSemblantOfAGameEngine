@@ -53,12 +53,18 @@ void ImGuiPersonal::createObjectsSettings(){
 				selectedObjectFlags)
 				&& selectedModel!=nullptr)
 	{
-		ImGui::Text((ImGuiPersonal::selectedModel->getModelName()+ " settings").c_str());
+		ImGui::Text("%s",(ImGuiPersonal::selectedModel->getModelName()+ " settings").c_str());
 	}
 	ImGui::EndChild();
 }
 
 void ImGuiPersonal::createSideMenu(){
+	/*
+		static variables
+	*/
+	static bool button_createObjectFromLoaded	=false;
+	static bool button_createObjectFromFile		=false;
+
 	float sidePannelWidth=200.0f;
 
 	ImGuiWindowFlags rightSidePannelFlags = ImGuiWindowFlags_NoScrollbar|ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoSavedSettings;
@@ -79,15 +85,21 @@ void ImGuiPersonal::createSideMenu(){
 		loadedObjectsFlags=	ImGuiWindowFlags_NoScrollWithMouse|
 					ImGuiWindowFlags_NoMove;
 
-		ImVec2 menubarDims(0.0f,20.0f);
+		ImVec2 menubarDims(0.0f,0.0f);
 		if(ImGui::BeginChild(	"#rightSidePannelLoadedObjectsTopBar",
 					menubarDims,
 					true,
 					loadedObjectsFlags))
 		{
-			if(ImGui::Button("+ object",ImVec2(0.0f,0.0f))){
-				std::cout<<"some rather sus shit\n";
+			if(ImGui::Button("+ object from loaded",ImVec2(-1.0f,0.0f))){
+				button_createObjectFromLoaded=!button_createObjectFromLoaded;
 			}
+			if(ImGui::Button("+ object from file",ImVec2(-1.0f,0.0f))){
+				button_createObjectFromFile=!button_createObjectFromFile;
+			}
+
+			if(button_createObjectFromLoaded)	ImGuiPersonal::createAddObjectFromLoaded();
+			if(button_createObjectFromFile)		ImGuiPersonal::createAddObjectFromFile();
 		}ImGui::EndChild();
 
 		loadedObjectsFlags=	ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoSavedSettings;
@@ -102,7 +114,7 @@ void ImGuiPersonal::createSideMenu(){
 		ImGuiPersonal::createObjectsSettings();
 	}ImGui::End();
 	ImGui::PopStyleVar(1);
-		
+	
 }
 
 void ImGuiPersonal::createAll(){
@@ -120,5 +132,31 @@ void ImGuiPersonal::createAll(){
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	
 }
+void ImGuiPersonal::createAddObjectFromLoaded(){
+	int loadedModelsSize=loadedStuff::loadedModels.size();
+	if(loadedModelsSize==0)	return;
 
+	ImVec2 listSize(-1.0f,0.0f);
+	
+		ImGui::SetNextItemWidth(100.0f);
+	ImGui::ListBoxHeader("##",listSize);
+	for(Model item : loadedStuff::loadedModels){
+		bool selected =false;
+		ImVec2 itemSize(0.0f,0.0f);
+		ImGuiSelectableFlags flags=	ImGuiSelectableFlags_SelectOnClick;
+		std::string itemName=item.getModelName();
+		
+		ImGui::SetNextItemWidth(100.0f);
+		if(ImGui::Selectable(itemName.c_str(),&selected,flags,itemSize)){
+			std::cout<<"selected\n";
+		}
+	}
+	ImGui::ListBoxFooter();
+}
+void ImGuiPersonal::createAddObjectFromFile(){
+	if(ImGui::BeginListBox("Objects choosing methods",ImVec2(50.0f,50.0f))){
+		ImGui::Text("why not");
+		ImGui::EndListBox();
+	}
+}
 #endif
