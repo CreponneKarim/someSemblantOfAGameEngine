@@ -1,13 +1,14 @@
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
+#include <vector>
+
 //	GL STUFF
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <GL/gl.h>
 
 #include <glm/glm.hpp>
-#include <vector>
 #include <include/someSemblantOfAGameEngine/shader.hpp>
 #include <include/someSemblantOfAGameEngine/CommonUsedFunctions.hpp>
 #include <include/someSemblantOfAGameEngine/customDataTypes.hpp>

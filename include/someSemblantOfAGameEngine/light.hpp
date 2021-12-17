@@ -7,9 +7,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <include/someSemblantOfAGameEngine/sharedGlobalVars.hpp>
 #include <include/someSemblantOfAGameEngine/shader.hpp>
 #include <include/someSemblantOfAGameEngine/model.hpp>
-#include <include/someSemblantOfAGameEngine/sharedGlobalVars.hpp>
 
 class Light{
 	public:
@@ -52,7 +52,7 @@ class Light{
 			diffuse{LightVars::diffuseDefault};
 		int lightIndex{0};
 		glm::vec3 lightColor{LightVars::lightColorDefault};
-
+		glm::mat4 modelMat;
 		Model *model;
 };
 #endif

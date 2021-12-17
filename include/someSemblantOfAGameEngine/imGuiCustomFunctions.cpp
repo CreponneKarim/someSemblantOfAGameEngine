@@ -159,4 +159,8 @@ void ImGuiPersonal::createAddObjectFromFile(){
 		ImGui::EndListBox();
 	}
 }
+
+void ImGuiPersonal::createObjectCreationPanel(){
+	
+}
 #endif

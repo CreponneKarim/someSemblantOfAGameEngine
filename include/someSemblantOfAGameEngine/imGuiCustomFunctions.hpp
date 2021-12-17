@@ -30,6 +30,7 @@ namespace ImGuiPersonal{
 	void createObjectsSettings();
 	void createAddObjectFromLoaded();
 	void createAddObjectFromFile();
+	void createObjectCreationPanel();
 }
 
 #endif

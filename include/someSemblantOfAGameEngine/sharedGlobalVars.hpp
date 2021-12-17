@@ -4,6 +4,7 @@
 #include <glm/vec3.hpp>
 #include <glm/common.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <filesystem>
 
 namespace LightVars{
 	inline float kcDefault			{1.0f};
@@ -34,7 +35,11 @@ namespace window{
 class Model;
 class Light;
 
+#include <include/someSemblantOfAGameEngine/light.hpp>
+#include <include/someSemblantOfAGameEngine/model.hpp>
+
 namespace loadedStuff{
+	inline Model defaultCube(std::filesystem::path("models/cube/w5c7yv4l7sgo.obj"));
 	inline std::vector<Model> loadedModels;
 	inline std::vector<Light> loadedLights;
 }
