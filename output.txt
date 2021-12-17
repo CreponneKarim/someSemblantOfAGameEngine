@@ -1,0 +1,18 @@
+>>libs
+g++ -g -std=c++17 -c -I/home/creponnekarim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_draw.cpp -o obj_files/imgui_draw.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/creponnekarim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_widgets.cpp -o obj_files/imgui_widgets.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/creponnekarim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/stb_image.cpp -o obj_files/stb_image.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/creponnekarim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_impl_opengl3.cpp -o obj_files/imgui_impl_opengl3.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/creponnekarim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_tables.cpp -o obj_files/imgui_tables.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/creponnekarim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui.cpp -o obj_files/imgui.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/creponnekarim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_demo.cpp -o obj_files/imgui_demo.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/creponnekarim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/imgui_impl_glfw.cpp -o obj_files/imgui_impl_glfw.o -lglfw -ldl -lassimp -lstdc++fs
+>>libs
+g++ -g -std=c++17 -c -I/home/creponnekarim/my_progs/cpp_progs/someSemblantOfAGameEngine libs/glad.c -o obj_files/glad.o -lglfw -ldl -lassimp -lstdc++fs

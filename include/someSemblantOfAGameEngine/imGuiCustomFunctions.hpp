@@ -11,6 +11,7 @@
 //	included here, because of bad coding :(. Sadly i'm still a scrub lol
 #include <include/someSemblantOfAGameEngine/custom_gl_callbacks.hpp>
 #include <include/someSemblantOfAGameEngine/sharedGlobalVars.hpp>
+#include <include/someSemblantOfAGameEngine/object.hpp>
 
 #include <libs/imgui.h>
 #include <libs/imgui_impl_glfw.h>
@@ -30,7 +31,8 @@ namespace ImGuiPersonal{
 	void createObjectsSettings();
 	void createAddObjectFromLoaded();
 	void createAddObjectFromFile();
-	void createObjectCreationPanel();
+	void createObjectSettings();
+	void createObjectsList();
 }
 
 #endif

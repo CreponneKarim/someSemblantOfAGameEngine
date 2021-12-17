@@ -13,7 +13,6 @@ int main(int argc, char *argv[]){
 	if(gladInits::init()==-1)	return -1;
 
 	Shader shaderProgram("./src/shaders/vertexShader.vert","./src/shaders/fragmentShaderAllLights.frag");
-
 	Shader lightShaderProgram("./src/shaders/vertexShader.vert","./src/shaders/lightFragmentShader.frag");
 	
 	shaderProgram.use();
@@ -66,15 +65,15 @@ int main(int argc, char *argv[]){
 	//	dear ImGui shittery
 	ImGuiPersonal::init(window1);
 
-	Model cubeModel(std::filesystem::path("models/cube/w5c7yv4l7sgo.obj"));
-	loadedStuff::loadedModels.push_back(cubeModel);
+	Model defaultCube(std::filesystem::path("models/cube/w5c7yv4l7sgo.obj"));
+	loadedStuff::loadedModels.push_back(defaultCube);
 	loadedStuff::loadedLights.push_back(Light(	LightVars::kcDefault,
 							LightVars::klDefault,
 							LightVars::kqDefault,
 							LightVars::ambientDefault,
 							LightVars::diffuseDefault,
 							LightVars::lightColorDefault,
-							&cubeModel)
+							&defaultCube)
 						);
 
 

@@ -42,7 +42,6 @@ void ImGuiPersonal::createTopBar(){
 
 }
 
-
 void ImGuiPersonal::createObjectsSettings(){
 
 	ImVec2 selectedObjectsDims=ImVec2(0.0f,0.0f);
@@ -95,6 +94,7 @@ void ImGuiPersonal::createSideMenu(){
 				button_createObjectFromLoaded=!button_createObjectFromLoaded;
 			}
 			if(ImGui::Button("+ object from file",ImVec2(-1.0f,0.0f))){
+				fileDialog.Open();
 				button_createObjectFromFile=!button_createObjectFromFile;
 			}
 
@@ -132,14 +132,16 @@ void ImGuiPersonal::createAll(){
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	
 }
+
 void ImGuiPersonal::createAddObjectFromLoaded(){
 	int loadedModelsSize=loadedStuff::loadedModels.size();
 	if(loadedModelsSize==0)	return;
 
 	ImVec2 listSize(-1.0f,0.0f);
 	
-		ImGui::SetNextItemWidth(100.0f);
+	ImGui::SetNextItemWidth(100.0f);
 	ImGui::ListBoxHeader("##",listSize);
+	int i=0;
 	for(Model item : loadedStuff::loadedModels){
 		bool selected =false;
 		ImVec2 itemSize(0.0f,0.0f);
@@ -148,19 +150,46 @@ void ImGuiPersonal::createAddObjectFromLoaded(){
 		
 		ImGui::SetNextItemWidth(100.0f);
 		if(ImGui::Selectable(itemName.c_str(),&selected,flags,itemSize)){
-			std::cout<<"selected\n";
+			loadedStuff::loadedObjects.push_back	(	Object(
+									loadedStuff::loadedModels[i]
+									)
+								);
 		}
+		i++;
 	}
 	ImGui::ListBoxFooter();
 }
+
 void ImGuiPersonal::createAddObjectFromFile(){
-	if(ImGui::BeginListBox("Objects choosing methods",ImVec2(50.0f,50.0f))){
-		ImGui::Text("why not");
-		ImGui::EndListBox();
+	fileDialog.Display();
+	glm::mat4 model(1.0f);
+
+	if(fileDialog.HasSelected()){
+		std::string slectedModelPath=fileDialog.GetSelected().string();
+		std::cout<<"slected file path: "<<slectedModelPath<<'\n';
+		loadedStuff::loadedModels.push_back(Model(slectedModelPath,model));
+
+		//	create the appropriate object
+		loadedStuff::loadedObjects.push_back	(	Object(
+								loadedStuff::loadedModels.back()
+								)
+							);
+
+		fileDialog.ClearSelected();
+	}
+
+}
+
+void ImGuiPersonal::createObjectSettings(){
+	static bool isOpened=false;
+	if(ImGui::Begin("new object settings",&isOpened)){
+		ImGui::End();
 	}
 }
 
-void ImGuiPersonal::createObjectCreationPanel(){
-	
+void ImGuiPersonal::createObjectsList(){
+	if(ImGui::BeginChild("##ObjectListChildWindow")){
+		ImGui::
+	}
 }
 #endif

@@ -18,7 +18,7 @@ class Object{
 
 	private:
 		//	assumming the default cube is always there
-		Model& model=loadedStuff::defaultCube;
+		Model* model=nullptr;
 		glm::mat4 modelMat{glm::mat4(1.0f)};
 };
 

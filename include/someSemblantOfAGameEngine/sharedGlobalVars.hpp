@@ -1,10 +1,12 @@
 #ifndef SHAREDGLOBALVARS_HPP
 #define SHAREDGLOBALVARS_HPP
 
+#include <vector>
+#include <filesystem>
+
 #include <glm/vec3.hpp>
 #include <glm/common.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <filesystem>
 
 namespace LightVars{
 	inline float kcDefault			{1.0f};
@@ -32,16 +34,18 @@ namespace window{
 	inline const int width{800},height{800};
 };
 
-class Model;
-class Light;
-
+#include <include/someSemblantOfAGameEngine/object.hpp>
 #include <include/someSemblantOfAGameEngine/light.hpp>
 #include <include/someSemblantOfAGameEngine/model.hpp>
 
+class Model;
+class Light;
+class Object;
+
 namespace loadedStuff{
-	inline Model defaultCube(std::filesystem::path("models/cube/w5c7yv4l7sgo.obj"));
-	inline std::vector<Model> loadedModels;
-	inline std::vector<Light> loadedLights;
+	inline std::vector<Model>	loadedModels;
+	inline std::vector<Light>	loadedLights;
+	inline std::vector<Object>	loadedObjects;
 }
 
 #endif
