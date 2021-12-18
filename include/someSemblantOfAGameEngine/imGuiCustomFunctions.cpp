@@ -109,6 +109,7 @@ void ImGuiPersonal::createSideMenu(){
 					true,
 					loadedObjectsFlags))
 		{	
+			ImGuiPersonal::createObjectsList();
 		}ImGui::EndChild();
 	
 		ImGuiPersonal::createObjectsSettings();
@@ -139,7 +140,6 @@ void ImGuiPersonal::createAddObjectFromLoaded(){
 
 	ImVec2 listSize(-1.0f,0.0f);
 	
-	ImGui::SetNextItemWidth(100.0f);
 	ImGui::ListBoxHeader("##",listSize);
 	int i=0;
 	for(Model item : loadedStuff::loadedModels){
@@ -148,12 +148,12 @@ void ImGuiPersonal::createAddObjectFromLoaded(){
 		ImGuiSelectableFlags flags=	ImGuiSelectableFlags_SelectOnClick;
 		std::string itemName=item.getModelName();
 		
-		ImGui::SetNextItemWidth(100.0f);
 		if(ImGui::Selectable(itemName.c_str(),&selected,flags,itemSize)){
 			loadedStuff::loadedObjects.push_back	(	Object(
 									loadedStuff::loadedModels[i]
 									)
 								);
+			std::cout<<"selected\n";
 		}
 		i++;
 	}
@@ -170,7 +170,9 @@ void ImGuiPersonal::createAddObjectFromFile(){
 		loadedStuff::loadedModels.push_back(Model(slectedModelPath,model));
 
 		//	create the appropriate object
-		loadedStuff::loadedObjects.push_back	(	Object(
+		loadedStuff::loadedObjects.push_back	(	
+								Object
+								(
 								loadedStuff::loadedModels.back()
 								)
 							);
@@ -188,8 +190,20 @@ void ImGuiPersonal::createObjectSettings(){
 }
 
 void ImGuiPersonal::createObjectsList(){
-	if(ImGui::BeginChild("##ObjectListChildWindow")){
-		ImGui::
+
+	ImVec2 listSize(-1.0f,0.0f);
+
+	ImGui::ListBoxHeader("##ObjectsListeBox",listSize);
+	for(Object item:loadedStuff::loadedObjects){
+		bool selected =false;
+		ImVec2 itemSize(0.0f,0.0f);
+		ImGuiSelectableFlags flags=	ImGuiSelectableFlags_SelectOnClick;
+		std::string itemName=item.getName();
+
+		if(ImGui::Selectable(itemName.c_str(),&selected,flags,itemSize)){
+			std::cout<<"here\n";
+		}
 	}
+	ImGui::ListBoxFooter();
 }
 #endif

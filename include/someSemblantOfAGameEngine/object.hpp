@@ -1,6 +1,8 @@
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
 
+#include <string>
+
 #include <glm/glm.hpp>
 #include <include/someSemblantOfAGameEngine/model.hpp>
 #include <include/someSemblantOfAGameEngine/sharedGlobalVars.hpp>
@@ -16,7 +18,10 @@ class Object{
 		Object(Model& model);
 		Object(Model& model,const glm::mat4 modelMat);
 
+		std::string getName();
+
 	private:
+		std::string name;
 		//	assumming the default cube is always there
 		Model* model=nullptr;
 		glm::mat4 modelMat{glm::mat4(1.0f)};
